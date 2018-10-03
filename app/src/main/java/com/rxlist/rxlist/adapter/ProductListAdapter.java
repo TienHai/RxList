@@ -7,25 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rxlist.rxlist.binding.RawBinder;
-import com.rxlist.rxlist.model.Notice;
-import com.rxlist.rxlist.viewmodel.NoticeViewModel;
-import com.rxlist.rxlist.viewsource.NoticeViewSource;
+import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.viewmodel.ProductViewModel;
+import com.rxlist.rxlist.viewsource.ProductViewSource;
 
 import java.util.ArrayList;
 
-public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder> {
+public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.NoticeViewHolder> {
 
-    private ArrayList<Notice> _dataList;
-    private NoticeViewSource _viewSource;
+    private ArrayList<Product> _dataList;
+    private ProductViewSource _viewSource;
     private LayoutInflater _layoutInflater;
 
-    public NoticeAdapter(NoticeViewSource viewSource) {
+    public ProductListAdapter(ProductViewSource viewSource) {
         _viewSource = viewSource;
         _dataList = new ArrayList<>();
         _layoutInflater = null;
     }
 
-    public void updateItems(ArrayList<Notice> items) {
+    public void updateItems(ArrayList<Product> items) {
         if (items == null) {
             items = new ArrayList<>();
         }
@@ -44,7 +44,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
     public void onBindViewHolder(NoticeViewHolder holder, int position) {
         View view = holder.itemView;
         RawBinder rawBinder = new RawBinder();
-        _viewSource.bindValues(view, rawBinder, new NoticeViewModel(view.getContext(), _dataList.get(position)));
+        _viewSource.bindValues(view, rawBinder, new ProductViewModel(view.getContext(), _dataList.get(position)));
     }
 
     @Override

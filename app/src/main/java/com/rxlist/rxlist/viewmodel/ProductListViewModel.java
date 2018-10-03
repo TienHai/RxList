@@ -1,15 +1,16 @@
 package com.rxlist.rxlist.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.rxlist.rxlist.binding.IBooleanObservable;
 import com.rxlist.rxlist.binding.ICallback;
 import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IEvent;
-import com.rxlist.rxlist.minterface.GetNoticeDataService;
-import com.rxlist.rxlist.model.Notice;
-import com.rxlist.rxlist.model.NoticeList;
+import com.rxlist.rxlist.minterface.GetProductDataService;
+import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductList;
 import com.rxlist.rxlist.network.RetrofitInstance;
 
 import java.util.ArrayList;
@@ -18,17 +19,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NoticeListViewModel {
+public class ProductListViewModel {
 
     private final Context _context;
     private boolean _loadSpinnerVisibility;
     private boolean _emptyStateVisibility;
-    private ArrayList<Notice> _noticeArrayList;
+    private ArrayList<Product> _productArrayList;
     private IEvent _noticeItemsChanged;
     private IEvent _loadSpinnerVisibilityEvent;
     private IEvent _emptyStateVisibilityEvent;
 
-    public NoticeListViewModel(Context context) {
+    public ProductListViewModel(Context context) {
         _context = context;
         _emptyStateVisibility = true;
         _loadSpinnerVisibility = false;
@@ -66,8 +67,8 @@ public class NoticeListViewModel {
         };
     }
 
-    public ArrayList<Notice> noticeItems() {
-        return _noticeArrayList;
+    public ArrayList<Product> ProductItems() {
+        return _productArrayList;
     }
 
     public ICommand searchCommand() {
@@ -83,31 +84,31 @@ public class NoticeListViewModel {
                 _loadSpinnerVisibility = true;
                 _emptyStateVisibilityEvent.changed();
                 _loadSpinnerVisibilityEvent.changed();
-                getNotices();
+                getProducts();
             }
         };
     }
 
-    public IEvent noticeItemsChanged() {
+    public IEvent ProductItemsChanged() {
         _noticeItemsChanged = newEvent();
 
         return _noticeItemsChanged;
     }
 
-    private void getNotices() {
-        GetNoticeDataService service = RetrofitInstance.getRetrofitInstance().create(GetNoticeDataService.class);
-        Call<NoticeList> call = service.getNoticeData();
-        call.enqueue(new Callback<NoticeList>() {
+    private void getProducts() {
+        GetProductDataService service = RetrofitInstance.getRetrofitInstance().create(GetProductDataService.class);
+        Call<ProductList> call = service.getProductData();
+        call.enqueue(new Callback<ProductList>() {
             @Override
-            public void onResponse(Call<NoticeList> call, Response<NoticeList> response) {
+            public void onResponse(Call<ProductList> call, Response<ProductList> response) {
                 _loadSpinnerVisibility = false;
-                _noticeArrayList = response.body().getNoticeArrayList();
+                _productArrayList = response.body().getProductArrayList();
                 _noticeItemsChanged.changed();
                 _loadSpinnerVisibilityEvent.changed();
             }
 
             @Override
-            public void onFailure(Call<NoticeList> call, Throwable t) {
+            public void onFailure(Call<ProductList> call, Throwable t) {
                 _emptyStateVisibility = true;
                 _loadSpinnerVisibility = false;
                 _emptyStateVisibilityEvent.changed();

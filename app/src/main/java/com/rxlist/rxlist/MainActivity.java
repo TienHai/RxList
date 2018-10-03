@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.rxlist.rxlist.binding.RawBinder;
-import com.rxlist.rxlist.viewmodel.NoticeListViewModel;
-import com.rxlist.rxlist.viewsource.NoticeListViewSource;
+import com.rxlist.rxlist.viewmodel.ProductListViewModel;
+import com.rxlist.rxlist.viewsource.ProductListViewSource;
 
 public class MainActivity extends AppCompatActivity {
 
-    private NoticeListViewSource _viewSource;
-    private NoticeListViewModel _viewModel;
+    private ProductListViewSource _viewSource;
+    private ProductListViewModel _viewModel;
 
     MainActivity() {
         _viewSource = null;
@@ -31,11 +31,12 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         _viewModel = createViewModel();
         RawBinder rawBinder = new RawBinder();
-        _viewSource = new NoticeListViewSource();
+        _viewSource = new ProductListViewSource();
         View createdView = _viewSource.createView(getLayoutInflater(), MainActivity.this);
         FrameLayout frameLayout = findViewById(R.id.root_container);
         frameLayout.addView(createdView);
         _viewSource.bindValues(createdView, rawBinder, _viewModel);
+
         /*_unbinder = rawBinder.build();*/
     }
 
@@ -66,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** */
-    private NoticeListViewModel createViewModel() {
-        NoticeListViewModel viewModel = new NoticeListViewModel(MainActivity.this);
+    private ProductListViewModel createViewModel() {
+        ProductListViewModel viewModel = new ProductListViewModel(MainActivity.this);
         return viewModel;
     }
 }

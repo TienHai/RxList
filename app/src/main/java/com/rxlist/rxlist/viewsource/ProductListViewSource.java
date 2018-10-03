@@ -12,15 +12,15 @@ import com.rxlist.rxlist.binding.IViewSource;
 import com.rxlist.rxlist.binding.appliers.OnClickApplier;
 import com.rxlist.rxlist.binding.appliers.RecyclerArrayApplier;
 import com.rxlist.rxlist.binding.appliers.VisibilityApplier;
-import com.rxlist.rxlist.model.Notice;
-import com.rxlist.rxlist.viewmodel.NoticeListViewModel;
+import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.viewmodel.ProductListViewModel;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
-public class NoticeListViewSource implements IViewSource<NoticeListViewModel> {
+public class ProductListViewSource implements IViewSource<ProductListViewModel> {
 
-    public NoticeListViewSource() {
+    public ProductListViewSource() {
     }
 
     @Override
@@ -34,17 +34,17 @@ public class NoticeListViewSource implements IViewSource<NoticeListViewModel> {
     }
 
     @Override
-    public void bindValues(View createdView, IRawBinder rawBinder, final NoticeListViewModel viewModel) {
+    public void bindValues(View createdView, IRawBinder rawBinder, final ProductListViewModel viewModel) {
         rawBinder
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.load_spinner)), viewModel.isLoadSpinnerVisible())
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.empty_state)), viewModel.isEmptyStateVisible())
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.search_button)), viewModel.searchCommand())
-                .bindApplier(new RecyclerArrayApplier((RecyclerView) createdView.findViewById(R.id.recycler_product_list), new NoticeViewSource()),
-                        new Callable<ArrayList<Notice>>() {
+                .bindApplier(new RecyclerArrayApplier((RecyclerView) createdView.findViewById(R.id.recycler_product_list), new ProductViewSource()),
+                        new Callable<ArrayList<Product>>() {
                             @Override
-                            public ArrayList<Notice> call() throws Exception {
-                                return viewModel.noticeItems();
+                            public ArrayList<Product> call() throws Exception {
+                                return viewModel.ProductItems();
                             }
-                        }, viewModel.noticeItemsChanged());
+                        }, viewModel.ProductItemsChanged());
     }
 }

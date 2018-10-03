@@ -5,28 +5,32 @@ import android.content.Intent;
 
 import com.rxlist.rxlist.ItemActivity;
 import com.rxlist.rxlist.binding.ICommand;
-import com.rxlist.rxlist.model.Notice;
+import com.rxlist.rxlist.model.Product;
 
-public class NoticeViewModel {
+public class ProductViewModel {
 
-    private final Notice _model;
+    private final Product _model;
     private final Context _context;
 
-    public NoticeViewModel(Context context, Notice model) {
+    public ProductViewModel(Context context, Product model) {
         _context = context;
         _model = model;
     }
 
-    public String title() {
-        return _model.getTitle();
+    public String headline() {
+        return _model.getHeadline();
     }
 
-    public String brief() {
-        return _model.getBrief();
+    public String caption() {
+        return _model.getCaption();
     }
 
-    public String filePath() {
-        return _model.getFileSource();
+    public String topic() {
+        return _model.getTopic();
+    }
+
+    public String reviews() {
+        return "" + Math.round(_model.getReviewsAverageNote()) + "/5 (" + _model.getNbReviews() + " Avis)";
     }
 
     public ICommand activateCommand() {
