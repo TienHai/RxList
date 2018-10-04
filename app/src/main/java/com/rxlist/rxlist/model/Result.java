@@ -10,7 +10,7 @@ public class Result {
     private String _title;
 
     @SerializedName("products")
-    private ArrayList<Product> _productList;
+    private ArrayList<ProductItem> _productItemList;
 
     public String getTitle() {
         return _title;
@@ -20,11 +20,11 @@ public class Result {
         _title = title;
     }
 
-    public ArrayList<Product> getProductArrayList() {
-        return _productList;
+    public ArrayList<ProductItem> getProductArrayList() {
+        return _productItemList;
     }
 
-    public void setProductArrayList(ArrayList<Product> productArrayList) {
-        _productList = productArrayList;
+    public void setProductArrayList(ArrayList<ProductItem> productItemArrayList) {
+        _productItemList = productItemArrayList;
     }
 }

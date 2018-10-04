@@ -5,14 +5,14 @@ import android.content.Intent;
 
 import com.rxlist.rxlist.ItemActivity;
 import com.rxlist.rxlist.binding.ICommand;
-import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductItem;
 
 public class ProductItemViewModel extends ProductViewModel {
 
-    private final Product _model;
+    private final ProductItem _model;
     private final Context _context;
 
-    public ProductItemViewModel(Context context, Product model) {
+    public ProductItemViewModel(Context context, ProductItem model) {
         super(model);
         _context = context;
         _model = model;
@@ -28,7 +28,7 @@ public class ProductItemViewModel extends ProductViewModel {
             @Override
             public void execute() {
                 Intent intent = new Intent(_context, ItemActivity.class);
-                intent.putExtra("Product", _model);
+                intent.putExtra("ProductItem", _model);
                 _context.startActivity(intent);
             }
         };

@@ -1,6 +1,6 @@
 package com.rxlist.rxlist.minterface;
 
-import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductItem;
 import com.rxlist.rxlist.model.ProductList;
 
 import java.util.List;
@@ -25,7 +25,10 @@ import retrofit2.http.QueryMap;
 public interface GetProductDataService {
 
     @GET("bins/k07iv/")
-    Call<ProductList> getProductData();
+    Call<ProductList> getProductListData();
+
+    @GET("bins/q0oqf")
+    Call<ProductItem> getProductData();
 
     /**
      * URL MANIPULATION
@@ -43,7 +46,7 @@ public interface GetProductDataService {
      * A corresponding parameter must be annotated with @Path using the same string.
      * */
     @GET("group/{id}/users")
-    Call<List<Product>> groupList(@Path("id") int groupId);
+    Call<List<ProductItem>> groupList(@Path("id") int groupId);
 
 
 
@@ -52,7 +55,7 @@ public interface GetProductDataService {
      * Using Query parameters.
      * */
     @GET("group/{id}/users")
-    Call<List<Product>> groupList(@Path("id") int groupId, @Query("sort") String sort);
+    Call<List<ProductItem>> groupList(@Path("id") int groupId, @Query("sort") String sort);
 
 
 
@@ -62,7 +65,7 @@ public interface GetProductDataService {
      * complex query parameter combinations a Map can be used
      * */
     @GET("group/{id}/noticelist")
-    Call<List<Product>> groupList(@Path("id") int groupId, @QueryMap Map<String, String> options);
+    Call<List<ProductItem>> groupList(@Path("id") int groupId, @QueryMap Map<String, String> options);
 
 
 
@@ -71,8 +74,8 @@ public interface GetProductDataService {
      * URL MANIPULATION
      * HTTP request body with the @Body annotation
      */
-    @POST("product/new")
-    Call<Product> createNotice(@Body Product product);
+    @POST("productItem/new")
+    Call<ProductItem> createNotice(@Body ProductItem productItem);
 
 
 
@@ -84,7 +87,7 @@ public interface GetProductDataService {
      * */
     @FormUrlEncoded
     @POST("notice/edit")
-    Call<Product> updateNotice(@Field("id") String id, @Field("title") String title);
+    Call<ProductItem> updateNotice(@Field("id") String id, @Field("title") String title);
 
 
 
@@ -96,7 +99,7 @@ public interface GetProductDataService {
      * */
     @Multipart
     @PUT("notice/photo")
-    Call<Product> updateNotice(@Part("photo") RequestBody photo, @Part("description") RequestBody description);
+    Call<ProductItem> updateNotice(@Part("photo") RequestBody photo, @Part("description") RequestBody description);
 
 
 
@@ -107,7 +110,7 @@ public interface GetProductDataService {
      * */
     @Headers("Cache-Control: max-age=640000")
     @GET("notice/list")
-    Call<List<Product>> NoticeList();
+    Call<List<ProductItem>> NoticeList();
 
 
 
@@ -119,7 +122,7 @@ public interface GetProductDataService {
             "User-Agent: Retrofit-Sample-App"
     })
     @GET("noticelist/{title}")
-    Call<Product> getNotice(@Path("title") String title);
+    Call<ProductItem> getNotice(@Path("title") String title);
 
 
 
@@ -131,6 +134,6 @@ public interface GetProductDataService {
      * If the value is null, the header will be omitted. Otherwise, toString will be called on the value, and the result used.
      * */
     @GET("notice")
-    Call<Product> getNoticeUsingHeader(@Header("Authorization") String authorization);
+    Call<ProductItem> getNoticeUsingHeader(@Header("Authorization") String authorization);
 
 }

@@ -9,13 +9,13 @@ public class ProductList {
     @SerializedName("result")
     private Result _result;
 
-    private ArrayList<Product> _productList;
+    private ArrayList<ProductItem> _productItemList;
 
-    public ArrayList<Product> getProductArrayList() {
+    public ArrayList<ProductItem> getProductArrayList() {
         return _result.getProductArrayList();
     }
 
-    public void setNoticeArrayList(ArrayList<Product> productArrayList) {
-        _result.setProductArrayList(productArrayList);
+    public void setNoticeArrayList(ArrayList<ProductItem> productItemArrayList) {
+        _result.setProductArrayList(productItemArrayList);
     }
 }

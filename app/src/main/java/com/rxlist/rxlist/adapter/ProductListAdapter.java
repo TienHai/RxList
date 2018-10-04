@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rxlist.rxlist.binding.RawBinder;
-import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductItem;
 import com.rxlist.rxlist.viewmodel.ProductItemViewModel;
 import com.rxlist.rxlist.viewsource.ProductItemViewSource;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.NoticeViewHolder> {
 
-    private ArrayList<Product> _dataList;
+    private ArrayList<ProductItem> _dataList;
     private ProductItemViewSource _viewSource;
     private LayoutInflater _layoutInflater;
 
@@ -25,7 +25,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         _layoutInflater = null;
     }
 
-    public void updateItems(ArrayList<Product> items) {
+    public void updateItems(ArrayList<ProductItem> items) {
         if (items == null) {
             items = new ArrayList<>();
         }

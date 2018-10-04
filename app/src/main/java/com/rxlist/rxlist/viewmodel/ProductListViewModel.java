@@ -1,7 +1,6 @@
 package com.rxlist.rxlist.viewmodel;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.rxlist.rxlist.binding.IBooleanObservable;
@@ -9,7 +8,7 @@ import com.rxlist.rxlist.binding.ICallback;
 import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IEvent;
 import com.rxlist.rxlist.minterface.GetProductDataService;
-import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductItem;
 import com.rxlist.rxlist.model.ProductList;
 import com.rxlist.rxlist.network.RetrofitInstance;
 
@@ -24,7 +23,7 @@ public class ProductListViewModel {
     private final Context _context;
     private boolean _loadSpinnerVisibility;
     private boolean _emptyStateVisibility;
-    private ArrayList<Product> _productArrayList;
+    private ArrayList<ProductItem> _productItemArrayList;
     private IEvent _noticeItemsChanged;
     private IEvent _loadSpinnerVisibilityEvent;
     private IEvent _emptyStateVisibilityEvent;
@@ -67,8 +66,8 @@ public class ProductListViewModel {
         };
     }
 
-    public ArrayList<Product> ProductItems() {
-        return _productArrayList;
+    public ArrayList<ProductItem> ProductItems() {
+        return _productItemArrayList;
     }
 
     public ICommand searchCommand() {
@@ -97,12 +96,12 @@ public class ProductListViewModel {
 
     private void getProducts() {
         GetProductDataService service = RetrofitInstance.getRetrofitInstance().create(GetProductDataService.class);
-        Call<ProductList> call = service.getProductData();
+        Call<ProductList> call = service.getProductListData();
         call.enqueue(new Callback<ProductList>() {
             @Override
             public void onResponse(Call<ProductList> call, Response<ProductList> response) {
                 _loadSpinnerVisibility = false;
-                _productArrayList = response.body().getProductArrayList();
+                _productItemArrayList = response.body().getProductArrayList();
                 _noticeItemsChanged.changed();
                 _loadSpinnerVisibilityEvent.changed();
             }

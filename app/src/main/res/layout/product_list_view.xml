@@ -40,8 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_container"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/white">
+        android:layout_alignParentBottom="true">
 
         <ProgressBar
             android:id="@+id/load_spinner"
@@ -63,7 +62,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="For begin search a product ..."/>
+            android:text="For begin search a product ..." />
 
     </FrameLayout>
 

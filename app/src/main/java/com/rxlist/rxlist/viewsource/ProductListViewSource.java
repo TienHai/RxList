@@ -17,7 +17,7 @@ import com.rxlist.rxlist.binding.appliers.OnClickApplier;
 import com.rxlist.rxlist.binding.appliers.OnEditorKeyboardActionApplier;
 import com.rxlist.rxlist.binding.appliers.RecyclerArrayApplier;
 import com.rxlist.rxlist.binding.appliers.VisibilityApplier;
-import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductItem;
 import com.rxlist.rxlist.viewmodel.ProductListViewModel;
 
 import java.util.ArrayList;
@@ -47,9 +47,9 @@ public class ProductListViewSource implements IViewSource<ProductListViewModel> 
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.empty_state)), viewModel.isEmptyStateVisible())
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.search_button)), viewModel.searchCommand())
                 .bindApplier(new RecyclerArrayApplier((RecyclerView) createdView.findViewById(R.id.recycler_product_list), new ProductItemViewSource()),
-                        new Callable<ArrayList<Product>>() {
+                        new Callable<ArrayList<ProductItem>>() {
                             @Override
-                            public ArrayList<Product> call() throws Exception {
+                            public ArrayList<ProductItem> call() throws Exception {
                                 return viewModel.ProductItems();
                             }
                         }, viewModel.ProductItemsChanged())

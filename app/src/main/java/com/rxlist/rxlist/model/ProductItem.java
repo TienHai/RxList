@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static com.rxlist.rxlist.model.ModelUtils.decodeString;
 
-public class Product implements Serializable {
+public class ProductItem implements Serializable {
     /*
     {
 "id":1527832569,
@@ -69,7 +69,7 @@ public class Product implements Serializable {
     @SerializedName("nbReviews")
     private int _nbReviews;
 
-    public Product(
+    public ProductItem(
             String id, String clusterId, Float newBestPrice, String headline, String caption, String topic,
             Float reviewsAverageNote, ArrayList<String> imagesUrls, int nbReviews) {
         _id = id;

@@ -1,6 +1,6 @@
 package com.rxlist.rxlist.viewmodel;
 
-import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductItem;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -9,9 +9,9 @@ import java.util.Locale;
 
 public class ProductViewModel {
 
-    private final Product _model;
+    private final ProductItem _model;
 
-    public ProductViewModel(Product model) {
+    public ProductViewModel(ProductItem model) {
         _model = model;
     }
 

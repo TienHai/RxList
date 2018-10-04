@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.rxlist.rxlist.binding.RawBinder;
-import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductItem;
 import com.rxlist.rxlist.viewmodel.ProductViewModel;
 import com.rxlist.rxlist.viewsource.ProductViewSource;
 
@@ -16,7 +16,7 @@ public class ItemActivity extends AppCompatActivity {
 
     private ProductViewSource _viewSource;
     private ProductViewModel _viewModel;
-    private Product _model;
+    private ProductItem _model;
 
     ItemActivity() {
         _viewSource = null;
@@ -29,7 +29,7 @@ public class ItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         Intent intent = getIntent();
-        _model = (Product) intent.getSerializableExtra("Product");
+        _model = (ProductItem) intent.getSerializableExtra("ProductItem");
     }
 
     @Override
