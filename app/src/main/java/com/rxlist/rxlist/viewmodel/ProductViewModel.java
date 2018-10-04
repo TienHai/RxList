@@ -1,47 +1,50 @@
 package com.rxlist.rxlist.viewmodel;
 
-import com.rxlist.rxlist.model.ProductItem;
+import android.content.Context;
+import android.widget.Toast;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Locale;
+import com.rxlist.rxlist.minterface.GetProductDataService;
+import com.rxlist.rxlist.model.Product;
+import com.rxlist.rxlist.model.ProductCall;
+import com.rxlist.rxlist.network.RetrofitInstance;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductViewModel {
 
-    private final ProductItem _model;
+    private Context _context;
+    private Product _model;
 
-    public ProductViewModel(ProductItem model) {
-        _model = model;
-    }
+    public ProductViewModel(Context context) {
+        _context = context;
+        _model = null;
 
-    public String newBestPriceText() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        format.setCurrency(Currency.getInstance(Locale.FRANCE));
-        return format.format(_model.getNewBestPrice());
+        getProduct();
     }
 
     public String headline() {
+        if (_model == null) {
+            return "";
+        }
+
         return _model.getHeadline();
     }
 
-    public String caption() {
-        return _model.getCaption();
-    }
+    private void getProduct() {
+        GetProductDataService service = RetrofitInstance.getRetrofitInstance().create(GetProductDataService.class);
+        Call<ProductCall> call = service.getProductData();
+        call.enqueue(new Callback<ProductCall>() {
+            @Override
+            public void onResponse(Call<ProductCall> call, Response<ProductCall> response) {
+                _model = response.body().getProductData();
+            }
 
-    public String topic() {
-        return _model.getTopic();
-    }
-
-    public String imageUrl() {
-        ArrayList<String> urls = _model.getImageUrls();
-        if (urls.isEmpty())
-            return null;
-
-        return urls.get(0);
-    }
-
-    public String reviewsText() {
-        return "" + Math.round(_model.getReviewsAverageNote()) + "/5 (" + _model.getNbReviews() + " Avis)";
+            @Override
+            public void onFailure(Call<ProductCall> call, Throwable t) {
+                Toast.makeText(_context, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

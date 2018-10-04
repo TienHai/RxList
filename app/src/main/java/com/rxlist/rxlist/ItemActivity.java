@@ -1,6 +1,5 @@
 package com.rxlist.rxlist;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.rxlist.rxlist.binding.RawBinder;
-import com.rxlist.rxlist.model.ProductItem;
+import com.rxlist.rxlist.model.Product;
 import com.rxlist.rxlist.viewmodel.ProductViewModel;
 import com.rxlist.rxlist.viewsource.ProductViewSource;
 
@@ -16,20 +15,17 @@ public class ItemActivity extends AppCompatActivity {
 
     private ProductViewSource _viewSource;
     private ProductViewModel _viewModel;
-    private ProductItem _model;
+    private Product _model;
 
     ItemActivity() {
         _viewSource = null;
         _viewModel = null;
-        _model = null;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
-        Intent intent = getIntent();
-        _model = (ProductItem) intent.getSerializableExtra("ProductItem");
     }
 
     @Override
@@ -74,7 +70,6 @@ public class ItemActivity extends AppCompatActivity {
 
     /** */
     private ProductViewModel createViewModel() {
-        ProductViewModel viewModel = new ProductViewModel(_model);
-        return viewModel;
+        return new ProductViewModel(ItemActivity.this);
     }
 }

@@ -8,47 +8,6 @@ import java.util.ArrayList;
 import static com.rxlist.rxlist.model.ModelUtils.decodeString;
 
 public class ProductItem implements Serializable {
-    /*
-    {
-"id":1527832569,
-"clusterId":5516208,
-"isDigital":false,
-"urlName":"apple-iphone-7",
-"productScope":"PUBLIC",
-"bestPrice":495.8,
-"newBestPrice":539.9,
-"usedBestPrice":495.8,
-"collectibleBestPrice":0.0,
-"advertsCount":87,
-"advertsNewCount":32,
-"advertsUsedCount":55,
-"advertsCollectibleCount":0,
-"headline":"Apple iPhone 7 32 Go Noir mat",
-"caption":"Apple",
-"topic":"Mobile",
-"reviewsAverageNote":4.666666666666667,
-"nbReviews":87,
-"imagesUrls":["https://pmcdn.priceminister.com/photo/1120739112.jpg"],
-"pickupAllowed":false,
-"isPreOrder":false,
-"releaseDate":null,
-"attributes":null,
-"isMemo":false,
-"isMevFormAvailable":false,
-"isNotModifiedSinceLastCrawl":false,
-"categoryRef":194695,
-"prdCategory":"[Tel-PDA, Tel-PDA_Telephones-mobiles]",
-"images":
-  [
-    {"imagesUrls":{"entry":[{"size":"LARGE","url":"https://pmcdn.priceminister.com/photo/1120739112_L.jpg"},{"size":"ORIGINAL","url":"https://pmcdn.priceminister.com/photo/1120739112.jpg"},{"size":"MEDIUM","url":"https://pmcdn.priceminister.com/photo/1120739112_M.jpg"},{"size":"SMALL","url":"https://pmcdn.priceminister.com/photo/1120739112_S.jpg"}]},"id":1120739112},
-    {"imagesUrls":{"entry":[{"size":"LARGE","url":"https://pmcdn.priceminister.com/photo/1120739113_L.jpg"},{"size":"ORIGINAL","url":"https://pmcdn.priceminister.com/photo/1120739113.jpg"},{"size":"MEDIUM","url":"https://pmcdn.priceminister.com/photo/1120739113_M.jpg"},{"size":"SMALL","url":"https://pmcdn.priceminister.com/photo/1120739113_S.jpg"}]},"id":1120739113},
-    {"imagesUrls":{"entry":[{"size":"LARGE","url":"https://pmcdn.priceminister.com/photo/1120739114_L.jpg"},{"size":"ORIGINAL","url":"https://pmcdn.priceminister.com/photo/1120739114.jpg"},{"size":"MEDIUM","url":"https://pmcdn.priceminister.com/photo/1120739114_M.jpg"},{"size":"SMALL","url":"https://pmcdn.priceminister.com/photo/1120739114_S.jpg"}]},"id":1120739114},
-    {"imagesUrls":{"entry":[{"size":"LARGE","url":"https://pmcdn.priceminister.com/photo/1107577441_L.jpg"},{"size":"ORIGINAL","url":"https://pmcdn.priceminister.com/photo/1107577441.jpg"},{"size":"MEDIUM","url":"https://pmcdn.priceminister.com/photo/1107577441_M.jpg"},{"size":"SMALL","url":"https://pmcdn.priceminister.com/photo/1107577441_S.jpg"}]},"id":1107577441}
-  ],
-"rspMinimumAmount":2480,
-"rspCampaignDiscount":24.8
-}
-     */
 
     @SerializedName("id")
     private String _id;
@@ -69,9 +28,9 @@ public class ProductItem implements Serializable {
     @SerializedName("nbReviews")
     private int _nbReviews;
 
-    public ProductItem(
-            String id, String clusterId, Float newBestPrice, String headline, String caption, String topic,
-            Float reviewsAverageNote, ArrayList<String> imagesUrls, int nbReviews) {
+    public ProductItem(String id, String clusterId, Float newBestPrice, String headline,
+                       String caption, String topic, Float reviewsAverageNote,
+                       ArrayList<String> imagesUrls, int nbReviews) {
         _id = id;
         _clusterId = clusterId;
         _newBestPrice = newBestPrice;
@@ -95,8 +54,8 @@ public class ProductItem implements Serializable {
         return _clusterId;
     }
 
-    public void setClusterId(String cludterId) {
-        _clusterId = cludterId;
+    public void setClusterId(String clusterId) {
+        _clusterId = clusterId;
     }
 
     public Float getNewBestPrice() {
