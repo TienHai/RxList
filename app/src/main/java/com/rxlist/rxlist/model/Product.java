@@ -2,11 +2,12 @@ package com.rxlist.rxlist.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static com.rxlist.rxlist.model.ModelUtils.decodeString;
 
-public class Product {
+public class Product implements Serializable {
     /*
     {
 "id":1527832569,

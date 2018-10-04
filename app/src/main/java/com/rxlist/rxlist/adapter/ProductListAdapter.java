@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.rxlist.rxlist.binding.RawBinder;
 import com.rxlist.rxlist.model.Product;
-import com.rxlist.rxlist.viewmodel.ProductViewModel;
+import com.rxlist.rxlist.viewmodel.ProductItemViewModel;
 import com.rxlist.rxlist.viewsource.ProductItemViewSource;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(NoticeViewHolder holder, int position) {
         View view = holder.itemView;
         RawBinder rawBinder = new RawBinder();
-        _viewSource.bindValues(view, rawBinder, new ProductViewModel(view.getContext(), _dataList.get(position)));
+        _viewSource.bindValues(view, rawBinder, new ProductItemViewModel(view.getContext(), _dataList.get(position)));
     }
 
     @Override
