@@ -53,6 +53,8 @@ public class Product {
     private String _id;
     @SerializedName("clusterId")
     private String _clusterId;
+    @SerializedName("newBestPrice")
+    private Float _newBestPrice;
     @SerializedName("headline")
     private String _headline;
     @SerializedName("caption")
@@ -66,11 +68,12 @@ public class Product {
     @SerializedName("nbReviews")
     private int _nbReviews;
 
-
     public Product(
-            String id, String clusterId, String headline, String caption, String topic,
+            String id, String clusterId, Float newBestPrice, String headline, String caption, String topic,
             Float reviewsAverageNote, ArrayList<String> imagesUrls, int nbReviews) {
         _id = id;
+        _clusterId = clusterId;
+        _newBestPrice = newBestPrice;
         _headline = headline;
         _caption = caption;
         _topic = topic;
@@ -85,6 +88,22 @@ public class Product {
 
     public void setId(String id) {
         _id = id;
+    }
+
+    public String getClusterId() {
+        return _clusterId;
+    }
+
+    public void setClusterId(String cludterId) {
+        _clusterId = cludterId;
+    }
+
+    public Float getNewBestPrice() {
+        return _newBestPrice;
+    }
+
+    public void setNewBestPrice(Float newBestPrice) {
+        _newBestPrice = newBestPrice;
     }
 
     public String getHeadline() {
@@ -119,6 +138,14 @@ public class Product {
         _reviewsAverageNote = reviewsAverageNote;
     }
 
+    public ArrayList<String> getImageUrls() {
+        return _imagesUrls;
+    }
+
+    public void setImageUrls(ArrayList<String> imageUrls) {
+        _imagesUrls = imageUrls;
+    }
+
     public int getNbReviews() {
         return _nbReviews;
     }
@@ -126,5 +153,4 @@ public class Product {
     public void setNbReviews(int nbReviews) {
         _nbReviews = nbReviews;
     }
-
 }

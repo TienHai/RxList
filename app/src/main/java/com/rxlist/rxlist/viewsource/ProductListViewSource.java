@@ -5,11 +5,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.rxlist.rxlist.R;
+import com.rxlist.rxlist.binding.ICallback;
 import com.rxlist.rxlist.binding.IRawBinder;
 import com.rxlist.rxlist.binding.IViewSource;
 import com.rxlist.rxlist.binding.appliers.OnClickApplier;
+import com.rxlist.rxlist.binding.appliers.OnEditorKeyboardActionApplier;
 import com.rxlist.rxlist.binding.appliers.RecyclerArrayApplier;
 import com.rxlist.rxlist.binding.appliers.VisibilityApplier;
 import com.rxlist.rxlist.model.Product;
@@ -35,16 +40,39 @@ public class ProductListViewSource implements IViewSource<ProductListViewModel> 
 
     @Override
     public void bindValues(View createdView, IRawBinder rawBinder, final ProductListViewModel viewModel) {
+        final TextView searchString = createdView.findViewById(R.id.search_string);
+
         rawBinder
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.load_spinner)), viewModel.isLoadSpinnerVisible())
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.empty_state)), viewModel.isEmptyStateVisible())
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.search_button)), viewModel.searchCommand())
-                .bindApplier(new RecyclerArrayApplier((RecyclerView) createdView.findViewById(R.id.recycler_product_list), new ProductViewSource()),
+                .bindApplier(new RecyclerArrayApplier((RecyclerView) createdView.findViewById(R.id.recycler_product_list), new ProductItemViewSource()),
                         new Callable<ArrayList<Product>>() {
                             @Override
                             public ArrayList<Product> call() throws Exception {
                                 return viewModel.ProductItems();
                             }
-                        }, viewModel.ProductItemsChanged());
+                        }, viewModel.ProductItemsChanged())
+                .bindApplier(
+                        new OnEditorKeyboardActionApplier((TextView) createdView.findViewById(R.id.search_string), EditorInfo.IME_ACTION_SEARCH),
+                        new ICallback() {
+                            @Override
+                            public void execute() {
+                                if (searchString.getText().toString().isEmpty()) {
+                                    return;
+                                }
+
+                                if (viewModel.searchCommand().canExecute()) {
+                                    // Hide soft input
+                                    ViewSourceUtils.hideSoftInput(searchString);
+
+                                    // Search the string
+                                    viewModel.searchCommand().execute();
+
+                                    // Move cursor to end of text
+                                    ((EditText) searchString).setSelection(searchString.getText().length());
+                                }
+                            }
+                        });
     }
 }
