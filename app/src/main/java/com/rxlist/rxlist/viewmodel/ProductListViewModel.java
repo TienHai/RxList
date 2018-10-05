@@ -4,7 +4,6 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.rxlist.rxlist.binding.IBooleanObservable;
-import com.rxlist.rxlist.binding.ICallback;
 import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IEvent;
 import com.rxlist.rxlist.minterface.GetProductDataService;
@@ -43,7 +42,7 @@ public class ProductListViewModel {
 
             @Override
             public IEvent changed() {
-                _loadSpinnerVisibilityEvent = newEvent();
+                _loadSpinnerVisibilityEvent = ViewModelUtils.newEvent();
 
                 return _loadSpinnerVisibilityEvent;
             }
@@ -59,7 +58,7 @@ public class ProductListViewModel {
 
             @Override
             public IEvent changed() {
-                _emptyStateVisibilityEvent = newEvent();
+                _emptyStateVisibilityEvent = ViewModelUtils.newEvent();
 
                 return _emptyStateVisibilityEvent;
             }
@@ -89,7 +88,7 @@ public class ProductListViewModel {
     }
 
     public IEvent ProductItemsChanged() {
-        _noticeItemsChanged = newEvent();
+        _noticeItemsChanged = ViewModelUtils.newEvent();
 
         return _noticeItemsChanged;
     }
@@ -115,22 +114,5 @@ public class ProductListViewModel {
                 Toast.makeText(_context, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private IEvent newEvent() {
-        return new IEvent() {
-
-            private ICallback _callback;
-
-            @Override
-            public void subscribe(ICallback callback) {
-                _callback = callback;
-            }
-
-            @Override
-            public void changed() {
-                _callback.execute();
-            }
-        };
     }
 }
