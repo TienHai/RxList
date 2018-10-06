@@ -11,4 +11,5 @@ public interface IRawBinder
     <E> IRawBinder bindApplier(IBindingApplier<E> applier, E element);
     <E> IRawBinder bindApplier(IBindingApplier<E> applier, Callable<E> retrieveElement, IEvent changed);
     IRawBinder bindApplier(IBindingApplier<Boolean> applier, IBooleanObservable observable);
+    IRawBinder bindApplier(IBindingApplier<String> applier, IStringObservable observable);
 }

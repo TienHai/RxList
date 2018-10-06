@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ProductCall implements Serializable {
+public class ProductResult {
 
     @SerializedName("result")
     private Product _result;
 
-    public ProductCall(Product result) {
+    public ProductResult(Product result) {
         _result = result;
     }
 

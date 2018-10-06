@@ -78,6 +78,20 @@ public class RawBinder implements IRawBinder {
                 observable.changed());
     }
 
+    @Override
+    public IRawBinder bindApplier(IBindingApplier<String> applier, final IStringObservable observable) {
+        return bindApplier(
+                applier,
+                new Callable<String>() {
+                    @Override
+                    public String call()
+                    {
+                        return observable.value();
+                    }
+                },
+                observable.changed());
+    }
+
     private static class ApplyerTerminationUnbinder<E> implements IUnbinder 
     {
         private IBindingApplier<E> _applier;

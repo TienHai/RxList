@@ -1,6 +1,6 @@
 package com.rxlist.rxlist.minterface;
 
-import com.rxlist.rxlist.model.ProductCall;
+import com.rxlist.rxlist.model.ProductResult;
 import com.rxlist.rxlist.model.ProductList;
 
 import retrofit2.Call;
@@ -12,5 +12,5 @@ public interface GetProductDataService {
     Call<ProductList> getProductListData();
 
     @GET("bins/q0oqf")
-    Call<ProductCall> getProductData();
+    Call<ProductResult> getProductData();
 }

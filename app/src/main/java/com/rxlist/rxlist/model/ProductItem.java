@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static com.rxlist.rxlist.model.ModelUtils.decodeString;
 
-public class ProductItem implements Serializable {
+public class ProductItem {
 
     @SerializedName("id")
     private String _id;

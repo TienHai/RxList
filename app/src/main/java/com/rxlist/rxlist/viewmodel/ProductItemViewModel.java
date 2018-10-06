@@ -62,7 +62,6 @@ public class ProductItemViewModel {
             @Override
             public void execute() {
                 Intent intent = new Intent(_context, ItemActivity.class);
-                intent.putExtra("ProductItem", _model);
                 _context.startActivity(intent);
             }
         };
