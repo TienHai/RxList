@@ -1,7 +1,6 @@
 package com.rxlist.rxlist.viewmodel;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.rxlist.rxlist.binding.IBooleanObservable;
@@ -12,7 +11,10 @@ import com.rxlist.rxlist.model.Product;
 import com.rxlist.rxlist.model.ProductResult;
 import com.rxlist.rxlist.network.RetrofitInstance;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +28,7 @@ public class ProductViewModel {
     private IEvent _loadingProductEvent;
     private IEvent _modelHeadlineEvent;
     private IEvent _modelImageUrlEvent;
+    private IEvent _modelNewBestPriceEvent;
 
     public ProductViewModel(Context context) {
         _context = context;
@@ -34,6 +37,7 @@ public class ProductViewModel {
         _loadingProductVisibility = true;
         _modelHeadlineEvent = null;
         _modelImageUrlEvent = null;
+        _modelNewBestPriceEvent = null;
 
         getProduct();
     }
@@ -42,6 +46,10 @@ public class ProductViewModel {
         return new IStringObservable() {
             @Override
             public String value() {
+                if (_model == null) {
+                    return null;
+                }
+
                 return _model.getHeadline();
             }
 
@@ -54,10 +62,36 @@ public class ProductViewModel {
         };
     }
 
+    public IStringObservable newBestPrice() {
+        return new IStringObservable() {
+            @Override
+            public String value() {
+                if (_model == null) {
+                    return null;
+                }
+
+                NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+                format.setCurrency(Currency.getInstance(Locale.FRANCE));
+                return format.format(_model.getNewBestPrice());
+            }
+
+            @Override
+            public IEvent changed() {
+                _modelNewBestPriceEvent = ViewModelUtils.newEvent();
+
+                return _modelNewBestPriceEvent;
+            }
+        };
+    }
+
     public IStringObservable imageUrl() {
         return new IStringObservable() {
             @Override
             public String value() {
+                if (_model == null) {
+                    return null;
+                }
+
                 ArrayList<String> urls = _model.getImageUrls();
                 if (urls.isEmpty())
                     return null;
@@ -101,6 +135,7 @@ public class ProductViewModel {
                 _loadingProductEvent.changed();
                 _modelHeadlineEvent.changed();
                 _modelImageUrlEvent.changed();
+                _modelNewBestPriceEvent.changed();
             }
 
             @Override

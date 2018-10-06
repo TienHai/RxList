@@ -22,6 +22,10 @@ public class ImageApplier implements IBindingApplier<String>
     public void update(final String url) {
         // Use Picasso to load the image
         // Temporarily have a placeholder in case it's slow to load
+        if (url == null) {
+            return;
+        }
+
         Picasso.get()
                 .load(url)
                 .placeholder(R.mipmap.ic_launcher)
