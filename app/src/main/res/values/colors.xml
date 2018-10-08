@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="textColorPrimary">#000000</color>
+    <color name="ratingColorPrimary">#ffb632</color>
 </resources>
