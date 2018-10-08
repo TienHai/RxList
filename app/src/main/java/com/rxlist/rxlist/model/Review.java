@@ -39,12 +39,8 @@ public class Review {
         _title = value;
     }
 
-    public Author getAuthor() {
-        return  _author;
-    }
-
-    public void setAuthor(Author value) {
-        _author = value;
+    public String getAuthorName() {
+        return _author.getName();
     }
 
     public long getDate() {

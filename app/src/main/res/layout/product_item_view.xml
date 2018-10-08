@@ -22,16 +22,16 @@
             android:id="@+id/img_product"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:adjustViewBounds="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/img_product"
             android:layout_marginStart="6dp"
+            android:layout_toEndOf="@+id/img_product"
             android:orientation="vertical">
 
             <TextView
@@ -42,11 +42,26 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_product_reviews"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp" />
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/product_ratingbar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1.0" />
+
+                <TextView
+                    android:id="@+id/txt_product_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -78,9 +93,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:padding="3dp"
-                android:textStyle="bold"
                 android:textColor="#FF0000"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

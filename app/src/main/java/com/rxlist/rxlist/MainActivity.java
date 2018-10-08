@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.rxlist.rxlist.binding.IUnbinder;
 import com.rxlist.rxlist.binding.RawBinder;
 import com.rxlist.rxlist.viewmodel.ProductListViewModel;
 import com.rxlist.rxlist.viewsource.ProductListViewSource;
@@ -14,16 +15,19 @@ public class MainActivity extends AppCompatActivity {
 
     private ProductListViewSource _viewSource;
     private ProductListViewModel _viewModel;
+    private IUnbinder _unbinder;
 
     MainActivity() {
         _viewSource = null;
         _viewModel = null;
+        _unbinder = null;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        setTitle("Product list");
     }
 
     @Override
@@ -36,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout frameLayout = findViewById(R.id.root_container);
         frameLayout.addView(createdView);
         _viewSource.bindValues(createdView, rawBinder, _viewModel);
-
-        /*_unbinder = rawBinder.build();*/
+        _unbinder = rawBinder.build();
     }
 
     @Override
@@ -57,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        /*
         _unbinder.unbind();
         _unbinder = null;
-        */
         _viewModel = null;
         _viewSource = null;
         super.onStop();

@@ -15,6 +15,12 @@ public class RawBinder implements IRawBinder {
         _unbinders = new ArrayList<IUnbinder>();
     }
 
+    public IUnbinder build() {
+        List<IUnbinder> unbinders = _unbinders;
+        _unbinders = null;
+        return new UnbinderList(unbinders);
+    }
+
     @Override
     public IRawBinder addUnbinder(IUnbinder unbinder)
     {
@@ -107,6 +113,21 @@ public class RawBinder implements IRawBinder {
                 IBindingApplier<E> applier = _applier;
                 _applier = null;
                 applier.terminate();
+            }
+        }
+    }
+
+    private static class UnbinderList implements IUnbinder {
+        private final List<IUnbinder> _unbinders;
+
+        public UnbinderList(List<IUnbinder> unbinders) {
+            _unbinders = unbinders;
+        }
+
+        @Override
+        public void unbind() {
+            for (IUnbinder u : _unbinders) {
+                u.unbind();
             }
         }
     }

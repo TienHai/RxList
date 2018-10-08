@@ -48,8 +48,12 @@ public class ProductItemViewModel {
         return urls.get(0);
     }
 
+    public float reviewsAverageNote() {
+        return _model.getReviewsAverageNote();
+    }
+
     public String reviewsText() {
-        return "" + Math.round(_model.getReviewsAverageNote()) + "/5 (" + _model.getNbReviews() + " Avis)";
+        return "(" + _model.getNbReviews() + " Avis)";
     }
 
     public ICommand activateCommand() {

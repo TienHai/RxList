@@ -52,7 +52,7 @@ public class ProductListViewSource implements IViewSource<ProductListViewModel> 
                             public ArrayList<ProductItem> call() throws Exception {
                                 return viewModel.ProductItems();
                             }
-                        }, viewModel.ProductItemsChanged())
+                        }, viewModel.productItemsChanged())
                 .bindApplier(
                         new OnEditorKeyboardActionApplier((TextView) createdView.findViewById(R.id.search_string), EditorInfo.IME_ACTION_SEARCH),
                         new ICallback() {

@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.rxlist.rxlist.binding.IUnbinder;
 import com.rxlist.rxlist.binding.RawBinder;
-import com.rxlist.rxlist.model.Product;
 import com.rxlist.rxlist.viewmodel.ProductViewModel;
 import com.rxlist.rxlist.viewsource.ProductViewSource;
 
@@ -15,17 +15,19 @@ public class ItemActivity extends AppCompatActivity {
 
     private ProductViewSource _viewSource;
     private ProductViewModel _viewModel;
-    private Product _model;
+    private IUnbinder _unbinder;
 
     ItemActivity() {
         _viewSource = null;
         _viewModel = null;
+        _unbinder = null;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        setTitle("Product details");
     }
 
     @Override
@@ -38,8 +40,7 @@ public class ItemActivity extends AppCompatActivity {
         FrameLayout frameLayout = findViewById(R.id.root_container);
         frameLayout.addView(createdView);
         _viewSource.bindValues(createdView, rawBinder, _viewModel);
-
-        /*_unbinder = rawBinder.build();*/
+        _unbinder = rawBinder.build();
     }
 
     @Override
@@ -59,10 +60,8 @@ public class ItemActivity extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        /*
         _unbinder.unbind();
         _unbinder = null;
-        */
         _viewModel = null;
         _viewSource = null;
         super.onStop();

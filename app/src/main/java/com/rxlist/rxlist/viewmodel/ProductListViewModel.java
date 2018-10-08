@@ -87,7 +87,7 @@ public class ProductListViewModel {
         };
     }
 
-    public IEvent ProductItemsChanged() {
+    public IEvent productItemsChanged() {
         _noticeItemsChanged = ViewModelUtils.newEvent();
 
         return _noticeItemsChanged;

@@ -9,6 +9,7 @@ import com.rxlist.rxlist.binding.IStringObservable;
 import com.rxlist.rxlist.minterface.GetProductDataService;
 import com.rxlist.rxlist.model.Product;
 import com.rxlist.rxlist.model.ProductResult;
+import com.rxlist.rxlist.model.Review;
 import com.rxlist.rxlist.network.RetrofitInstance;
 
 import java.text.NumberFormat;
@@ -29,6 +30,7 @@ public class ProductViewModel {
     private IEvent _modelHeadlineEvent;
     private IEvent _modelImageUrlEvent;
     private IEvent _modelNewBestPriceEvent;
+    private IEvent _modelReviewsEvent;
 
     public ProductViewModel(Context context) {
         _context = context;
@@ -38,6 +40,7 @@ public class ProductViewModel {
         _modelHeadlineEvent = null;
         _modelImageUrlEvent = null;
         _modelNewBestPriceEvent = null;
+        _modelReviewsEvent = null;
 
         getProduct();
     }
@@ -82,6 +85,21 @@ public class ProductViewModel {
                 return _modelNewBestPriceEvent;
             }
         };
+    }
+
+    public IEvent reviewsChanged() {
+        _modelReviewsEvent = ViewModelUtils.newEvent();
+
+        return _modelReviewsEvent;
+    }
+
+    public ArrayList<ReviewViewModel> reviews() {
+        ArrayList<ReviewViewModel> reviews = new ArrayList<>();
+        for (Review model: _model.getReviewList()) {
+            reviews.add(new ReviewViewModel(_context, model));
+        }
+
+        return reviews;
     }
 
     public IStringObservable imageUrl() {
@@ -136,6 +154,7 @@ public class ProductViewModel {
                 _modelHeadlineEvent.changed();
                 _modelImageUrlEvent.changed();
                 _modelNewBestPriceEvent.changed();
+                _modelReviewsEvent.changed();
             }
 
             @Override
