@@ -1,6 +1,7 @@
 package com.rxlist.rxlist.viewsource;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +24,15 @@ public class ProductViewSource implements IViewSource<ProductViewModel> {
 
     @Override
     public View createView(LayoutInflater inflater, Context context) {
-        return inflater.inflate(R.layout.product_view, /*root: */null);
+        View createdView = inflater.inflate(R.layout.product_view, /*root: */null);
+
+        /*
+        ViewPager viewPager = (ViewPager)  createdView.findViewById(R.id.img_product_pager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(createdView.getContext());
+        viewPager.setAdapter(adapter);
+        */
+
+        return createdView;
     }
 
     @Override
@@ -41,4 +50,26 @@ public class ProductViewSource implements IViewSource<ProductViewModel> {
                             }
                         }, viewModel.reviewsChanged());
     }
+
+    /*
+    public class ViewPagerAdapter {
+        public ViewPagerAdapter(Context context) {
+            this.context = context;
+            this.urls = urls;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View itemView = inflater.inflate(R.layout.viewpager_item, container,
+                    false);
+            // Locate the TextViews in viewpager_item.xml
+            imgflag = (ImageView) itemView.findViewById(R.id.image);
+            imgflag.setImageResource(urls[position]);
+            ((ViewPager) container).addView(itemView);
+            return itemView;
+        }
+    }
+    */
 }

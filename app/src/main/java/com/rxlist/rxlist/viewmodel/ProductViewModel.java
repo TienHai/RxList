@@ -127,6 +127,11 @@ public class ProductViewModel {
         };
     }
 
+    /*
+    public ArrayList<String> imagesUrls() {
+    }
+    */
+
     public IBooleanObservable isLoadingProductVisible(){
         return new IBooleanObservable() {
             @Override
