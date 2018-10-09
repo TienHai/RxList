@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    /** */
     private ProductListViewModel createViewModel() {
         ProductListViewModel viewModel = new ProductListViewModel(MainActivity.this);
         return viewModel;

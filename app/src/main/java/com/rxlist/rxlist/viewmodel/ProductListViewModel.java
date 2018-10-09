@@ -3,6 +3,7 @@ package com.rxlist.rxlist.viewmodel;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.rxlist.rxlist.R;
 import com.rxlist.rxlist.binding.IBooleanObservable;
 import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IEvent;
@@ -94,7 +95,7 @@ public class ProductListViewModel {
     }
 
     private void getProducts() {
-        GetProductDataService service = RetrofitInstance.getRetrofitInstance().create(GetProductDataService.class);
+        GetProductDataService service = RetrofitInstance.getRetrofitInstance(_context.getResources().getString(R.string.URL_BASE)).create(GetProductDataService.class);
         Call<ProductList> call = service.getProductListData();
         call.enqueue(new Callback<ProductList>() {
             @Override

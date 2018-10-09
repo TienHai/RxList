@@ -25,9 +25,6 @@ import java.util.concurrent.Callable;
 
 public class ProductListViewSource implements IViewSource<ProductListViewModel> {
 
-    public ProductListViewSource() {
-    }
-
     @Override
     public View createView(LayoutInflater inflater, Context context) {
         View createdView = inflater.inflate(R.layout.product_list_view, /*root: */null);
@@ -63,13 +60,8 @@ public class ProductListViewSource implements IViewSource<ProductListViewModel> 
                                 }
 
                                 if (viewModel.searchCommand().canExecute()) {
-                                    // Hide soft input
                                     ViewSourceUtils.hideSoftInput(searchString);
-
-                                    // Search the string
                                     viewModel.searchCommand().execute();
-
-                                    // Move cursor to end of text
                                     ((EditText) searchString).setSelection(searchString.getText().length());
                                 }
                             }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RxList</string>
+    <string name="URL_BASE">https://api.myjson.com/</string>
 </resources>

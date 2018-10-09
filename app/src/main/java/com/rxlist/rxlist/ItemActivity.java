@@ -67,7 +67,6 @@ public class ItemActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    /** */
     private ProductViewModel createViewModel() {
         return new ProductViewModel(ItemActivity.this);
     }
