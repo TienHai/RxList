@@ -29,7 +29,7 @@ public class ProductViewModel {
     private boolean _loadingProductVisibility;
     private IEvent _loadingProductEvent;
     private IEvent _modelHeadlineEvent;
-    private IEvent _modelImageUrlEvent;
+    private IEvent _modelImagesUrlsEvent;
     private IEvent _modelNewBestPriceEvent;
     private IEvent _modelReviewsEvent;
 
@@ -39,7 +39,7 @@ public class ProductViewModel {
         _loadingProductEvent = null;
         _loadingProductVisibility = true;
         _modelHeadlineEvent = null;
-        _modelImageUrlEvent = null;
+        _modelImagesUrlsEvent = null;
         _modelNewBestPriceEvent = null;
         _modelReviewsEvent = null;
 
@@ -94,6 +94,12 @@ public class ProductViewModel {
         return _modelReviewsEvent;
     }
 
+    public IEvent imagesUrlsChanged() {
+        _modelImagesUrlsEvent = ViewModelUtils.newEvent();
+
+        return _modelImagesUrlsEvent;
+    }
+
     public ArrayList<ReviewViewModel> reviews() {
         ArrayList<ReviewViewModel> reviews = new ArrayList<>();
         for (Review model: _model.getReviewList()) {
@@ -103,34 +109,9 @@ public class ProductViewModel {
         return reviews;
     }
 
-    public IStringObservable imageUrl() {
-        return new IStringObservable() {
-            @Override
-            public String value() {
-                if (_model == null) {
-                    return null;
-                }
-
-                ArrayList<String> urls = _model.getImageUrls();
-                if (urls.isEmpty())
-                    return null;
-
-                return urls.get(0);
-            }
-
-            @Override
-            public IEvent changed() {
-                _modelImageUrlEvent = ViewModelUtils.newEvent();
-
-                return _modelImageUrlEvent;
-            }
-        };
-    }
-
-    /*
     public ArrayList<String> imagesUrls() {
+        return _model.getImageUrls();
     }
-    */
 
     public IBooleanObservable isLoadingProductVisible(){
         return new IBooleanObservable() {
@@ -158,7 +139,7 @@ public class ProductViewModel {
                 _loadingProductVisibility = false;
                 _loadingProductEvent.changed();
                 _modelHeadlineEvent.changed();
-                _modelImageUrlEvent.changed();
+                _modelImagesUrlsEvent.changed();
                 _modelNewBestPriceEvent.changed();
                 _modelReviewsEvent.changed();
             }
