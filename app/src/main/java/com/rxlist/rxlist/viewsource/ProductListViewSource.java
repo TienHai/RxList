@@ -42,6 +42,7 @@ public class ProductListViewSource implements IViewSource<ProductListViewModel> 
         rawBinder
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.load_spinner)), viewModel.isLoadSpinnerVisible())
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.empty_state)), viewModel.isEmptyStateVisible())
+                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.recycler_product_list)), viewModel.isProductListVisible())
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.search_button)), viewModel.searchCommand())
                 .bindApplier(new RecyclerArrayApplier((RecyclerView) createdView.findViewById(R.id.recycler_product_list), new ProductItemViewSource()),
                         new Callable<ArrayList<ProductItem>>() {

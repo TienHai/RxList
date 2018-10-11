@@ -1,28 +1,22 @@
 package com.rxlist.rxlist.viewsource;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.rxlist.rxlist.R;
 import com.rxlist.rxlist.binding.IRawBinder;
 import com.rxlist.rxlist.binding.IViewSource;
-import com.rxlist.rxlist.binding.appliers.ImageApplier;
 import com.rxlist.rxlist.binding.appliers.ImageViewPagerArrayApplier;
 import com.rxlist.rxlist.binding.appliers.ReviewsApplier;
 import com.rxlist.rxlist.binding.appliers.TextApplier;
 import com.rxlist.rxlist.binding.appliers.VisibilityApplier;
 import com.rxlist.rxlist.viewmodel.ProductViewModel;
 import com.rxlist.rxlist.viewmodel.ReviewViewModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -32,8 +26,8 @@ public class ProductViewSource implements IViewSource<ProductViewModel> {
     @Override
     public View createView(LayoutInflater inflater, Context context) {
         View createdView = inflater.inflate(R.layout.product_view, /*root: */null);
-        ViewPager pager = (ViewPager) createdView.findViewById(R.id.img_product_pager);
-        TabLayout tabLayout = (TabLayout) createdView.findViewById(R.id.img_product_tab);
+        ViewPager pager = createdView.findViewById(R.id.img_product_pager);
+        TabLayout tabLayout = createdView.findViewById(R.id.img_product_tab);
         tabLayout.setupWithViewPager(pager, true);
 
         return createdView;

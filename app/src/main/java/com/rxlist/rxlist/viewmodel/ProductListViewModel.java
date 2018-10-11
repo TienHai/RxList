@@ -23,15 +23,21 @@ public class ProductListViewModel {
     private final Context _context;
     private boolean _loadSpinnerVisibility;
     private boolean _emptyStateVisibility;
+    private boolean _productListVisibility;
     private ArrayList<ProductItem> _productItemArrayList;
     private IEvent _noticeItemsChanged;
     private IEvent _loadSpinnerVisibilityEvent;
     private IEvent _emptyStateVisibilityEvent;
+    private IEvent _productListVisibilityEvent;
 
     public ProductListViewModel(Context context) {
         _context = context;
         _emptyStateVisibility = true;
         _loadSpinnerVisibility = false;
+        _productListVisibility = false;
+        _loadSpinnerVisibilityEvent = null;
+        _emptyStateVisibilityEvent = null;
+        _productListVisibilityEvent = null;
     }
 
     public IBooleanObservable isLoadSpinnerVisible() {
@@ -66,6 +72,22 @@ public class ProductListViewModel {
         };
     }
 
+    public IBooleanObservable isProductListVisible() {
+        return new IBooleanObservable() {
+            @Override
+            public boolean value() {
+                return _productListVisibility;
+            }
+
+            @Override
+            public IEvent changed() {
+                _productListVisibilityEvent = ViewModelUtils.newEvent();
+
+                return _productListVisibilityEvent;
+            }
+        };
+    }
+
     public ArrayList<ProductItem> ProductItems() {
         return _productItemArrayList;
     }
@@ -81,8 +103,10 @@ public class ProductListViewModel {
             public void execute() {
                 _emptyStateVisibility = false;
                 _loadSpinnerVisibility = true;
+                _productListVisibility = false;
                 _emptyStateVisibilityEvent.changed();
                 _loadSpinnerVisibilityEvent.changed();
+                _productListVisibilityEvent.changed();
                 getProducts();
             }
         };
@@ -101,17 +125,21 @@ public class ProductListViewModel {
             @Override
             public void onResponse(Call<ProductList> call, Response<ProductList> response) {
                 _loadSpinnerVisibility = false;
+                _productListVisibility = true;
                 _productItemArrayList = response.body().getProductArrayList();
                 _noticeItemsChanged.changed();
                 _loadSpinnerVisibilityEvent.changed();
+                _productListVisibilityEvent.changed();
             }
 
             @Override
             public void onFailure(Call<ProductList> call, Throwable t) {
                 _emptyStateVisibility = true;
                 _loadSpinnerVisibility = false;
+                _productListVisibility = false;
                 _emptyStateVisibilityEvent.changed();
                 _loadSpinnerVisibilityEvent.changed();
+                _productListVisibilityEvent.changed();
                 Toast.makeText(_context, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
