@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -29,26 +30,25 @@
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/img_product_pager"
-                android:layout_below="@id/txt_product_headline"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_below="@id/txt_product_headline"
                 android:visibility="visible"/>
 
-            <ImageView
-                android:id="@+id/img_product"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/img_product_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/img_product_pager"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:adjustViewBounds="true"
-                android:visibility="gone"/>
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
 
             <LinearLayout
                 android:id="@+id/product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/img_product"
+                android:layout_below="@id/img_product_tab"
                 android:orientation="horizontal"
                 android:padding="3dp">
 

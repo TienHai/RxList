@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.rxlist.rxlist.R;
-import com.rxlist.rxlist.model.ProductItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,16 +24,33 @@ public class ImageViewPagerAdapter extends PagerAdapter {
         _imagesUrls = new ArrayList<>();
     }
 
-
     public void updateItems(ArrayList<String> items) {
         if (items == null) {
             items = new ArrayList<>();
         }
-
-        Log.e("IMAGEPAGER", "updateItems");
-
         _imagesUrls = items;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup collection, int position) {
+        LayoutInflater inflater = LayoutInflater.from(_context);
+        ViewGroup itemView = (ViewGroup) inflater.inflate(R.layout.viewpager_item, collection,false);
+        collection.addView(itemView);
+
+        ImageView imageView = itemView.findViewById(R.id.img_product);
+        String imageUrl = _imagesUrls.get(position);
+        Picasso.get()
+                .load(imageUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(imageView);
+
+        return itemView;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup collection, int position, @NonNull Object view) {
+        collection.removeView((View) view);
     }
 
     @Override
@@ -43,29 +59,7 @@ public class ImageViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(@NonNull ViewGroup collection, int position) {
-        Log.e("IMAGEPAGER", "instantiateItem: " + position);
-
-        LayoutInflater inflater = LayoutInflater.from(_context);
-        View itemView = inflater.inflate(R.layout.viewpager_item, collection,false);
-        ImageView imageView = itemView.findViewById(R.id.img_product);
-        String imageUrl = _imagesUrls.get(position);
-        Picasso.get()
-                .load(imageUrl)
-                .placeholder(R.mipmap.ic_launcher)
-                .into(imageView);
-
-        collection.addView(itemView);
-        return itemView;
-    }
-
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object view) {
-        container.removeView((View) view);
-    }
-
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return false;
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view == object;
     }
 }

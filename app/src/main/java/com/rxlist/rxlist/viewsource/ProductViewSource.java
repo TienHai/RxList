@@ -2,8 +2,10 @@ package com.rxlist.rxlist.viewsource;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +31,18 @@ public class ProductViewSource implements IViewSource<ProductViewModel> {
 
     @Override
     public View createView(LayoutInflater inflater, Context context) {
-        return inflater.inflate(R.layout.product_view, /*root: */null);
+        View createdView = inflater.inflate(R.layout.product_view, /*root: */null);
+        ViewPager pager = (ViewPager) createdView.findViewById(R.id.img_product_pager);
+        TabLayout tabLayout = (TabLayout) createdView.findViewById(R.id.img_product_tab);
+        tabLayout.setupWithViewPager(pager, true);
+
+        return createdView;
     }
 
     @Override
     public void bindValues(View createdView, IRawBinder rawBinder, final ProductViewModel viewModel) {
         rawBinder
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.product_loading)), viewModel.isLoadingProductVisible())
-                //.bindApplier(new ImageApplier((ImageView) createdView.findViewById(R.id.img_product)), viewModel.imageUrl())
                 .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_product_headline)), viewModel.headline())
                 .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_product_newbestprice)), viewModel.newBestPrice())
                 .bindApplier(new ReviewsApplier(createdView.getContext(), createdView.findViewById(R.id.product_reviews), new ReviewViewSource()),
@@ -46,12 +52,12 @@ public class ProductViewSource implements IViewSource<ProductViewModel> {
                                 return viewModel.reviews();
                             }
                         }, viewModel.reviewsChanged())
-        .bindApplier(new ImageViewPagerArrayApplier((ViewPager) createdView.findViewById(R.id.img_product_pager)),
-                new Callable<ArrayList<String>>() {
-                    @Override
-                    public ArrayList<String> call() throws Exception {
-                        return null;
-                    }
-                }, viewModel.imagesUrlsChanged());
+                .bindApplier(new ImageViewPagerArrayApplier((ViewPager) createdView.findViewById(R.id.img_product_pager)),
+                        new Callable<ArrayList<String>>() {
+                            @Override
+                            public ArrayList<String> call() throws Exception {
+                                return viewModel.imagesUrls();
+                            }
+                        }, viewModel.imagesUrlsChanged());
     }
 }

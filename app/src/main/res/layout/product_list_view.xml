@@ -62,7 +62,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="For begin search a product ..." />
+            android:text="To begin search a product ..." />
 
     </FrameLayout>
 

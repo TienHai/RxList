@@ -25,6 +25,9 @@ public class ImageViewPagerArrayApplier implements IBindingApplier<ArrayList<Str
     @Override
     public void update(ArrayList<String> value) {
         _adapter.updateItems(value);
+
+        // Fix: re set the adpter when change items, "notifyDataSetChanged" seem not do the job.
+        _viewPager.setAdapter(_adapter);
     }
 
     @Override
