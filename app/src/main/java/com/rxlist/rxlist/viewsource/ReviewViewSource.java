@@ -17,7 +17,6 @@ import com.rxlist.rxlist.binding.ICallback;
 import com.rxlist.rxlist.binding.IRawBinder;
 import com.rxlist.rxlist.binding.IViewSource;
 import com.rxlist.rxlist.binding.appliers.OnCallbackClickApplier;
-import com.rxlist.rxlist.binding.appliers.OnClickApplier;
 import com.rxlist.rxlist.binding.appliers.RatingApplier;
 import com.rxlist.rxlist.binding.appliers.TextApplier;
 import com.rxlist.rxlist.viewmodel.ReviewViewModel;
@@ -36,8 +35,9 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
         ICallback callbackMore = new ICallback() {
             @Override
             public void execute() {
-                text.setMaxLines(Integer.MAX_VALUE); //expand fully
-                ObjectAnimator animation = textViewAnimation(text);
+                int height = text.getMeasuredHeight();
+                text.setMaxLines(Integer.MAX_VALUE);
+                ObjectAnimator animation = textViewAnimation(text, height);
                 animation.start();
             }
         };
@@ -45,9 +45,10 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
         ICallback callbackLess = new ICallback() {
             @Override
             public void execute() {
+                int height = text.getMeasuredHeight();
                 text.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                 text.setMaxLines(4);
-                ObjectAnimator animation = textViewAnimation(text);
+                ObjectAnimator animation = textViewAnimation(text, height);
                 animation.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -71,15 +72,12 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
                 .bindApplier(new OnCallbackClickApplier(createdView.findViewById(R.id.btn_review_less)), callbackLess);
     }
 
-    private ObjectAnimator textViewAnimation(TextView text) {
-        int height = text.getMeasuredHeight();
+    private ObjectAnimator textViewAnimation(TextView text, int originHeight) {
         text.measure(
-                View.MeasureSpec.makeMeasureSpec(
-                        text.getMeasuredWidth(),
-                        View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(text.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         final int newHeight = text.getMeasuredHeight();
-        ObjectAnimator animation = ObjectAnimator.ofInt(text, "height", height, newHeight);
+        ObjectAnimator animation = ObjectAnimator.ofInt(text, "height", originHeight, newHeight);
         animation.setDuration(250);
 
         return animation;
