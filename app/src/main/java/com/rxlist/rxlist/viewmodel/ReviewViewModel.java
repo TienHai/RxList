@@ -2,6 +2,7 @@ package com.rxlist.rxlist.viewmodel;
 
 import android.content.Context;
 
+import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.model.Review;
 
 public class ReviewViewModel {
@@ -29,5 +30,4 @@ public class ReviewViewModel {
     public String description() {
         return _model.getDescription();
     }
-
 }
