@@ -3,7 +3,6 @@ package com.rxlist.rxlist.viewsource;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import com.rxlist.rxlist.binding.IViewSource;
 import com.rxlist.rxlist.binding.appliers.OnCallbackClickApplier;
 import com.rxlist.rxlist.binding.appliers.RatingApplier;
 import com.rxlist.rxlist.binding.appliers.TextApplier;
+import com.rxlist.rxlist.binding.appliers.VisibilityApplier;
 import com.rxlist.rxlist.viewmodel.ReviewViewModel;
 
 public class ReviewViewSource implements IViewSource<ReviewViewModel> {
@@ -30,9 +30,20 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
 
     @Override
     public void bindValues(final View createdView, IRawBinder rawBinder, final ReviewViewModel viewModel) {
-        final TextView text = createdView.findViewById(R.id.txt_review_description);
+        TextView text = createdView.findViewById(R.id.txt_review_description);
+        rawBinder
+                .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_author_name)), viewModel.authorName())
+                .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_title)), viewModel.title())
+                .bindApplier(new RatingApplier((RatingBar) createdView.findViewById(R.id.review_ratingbar)), viewModel.note())
+                .bindApplier(new TextApplier(text), viewModel.description())
+                .bindApplier(new OnCallbackClickApplier(createdView.findViewById(R.id.btn_review_more)), callbackMore(text))
+                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.isButtonMoreVisible(text))
+                .bindApplier(new OnCallbackClickApplier(createdView.findViewById(R.id.btn_review_less)), callbackLess(text))
+                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.isButtonLessVisible(text));
+    }
 
-        ICallback callbackMore = new ICallback() {
+    private ICallback callbackMore(final TextView text) {
+        return new ICallback() {
             @Override
             public void execute() {
                 int height = text.getMeasuredHeight();
@@ -41,8 +52,10 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
                 animation.start();
             }
         };
+    }
 
-        ICallback callbackLess = new ICallback() {
+    private ICallback callbackLess(final TextView text) {
+        return new ICallback() {
             @Override
             public void execute() {
                 int height = text.getMeasuredHeight();
@@ -62,14 +75,6 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
                 animation.start();
             }
         };
-
-        rawBinder
-                .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_author_name)), viewModel.authorName())
-                .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_title)), viewModel.title())
-                .bindApplier(new RatingApplier((RatingBar) createdView.findViewById(R.id.review_ratingbar)), viewModel.note())
-                .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_description)), viewModel.description())
-                .bindApplier(new OnCallbackClickApplier(createdView.findViewById(R.id.btn_review_more)), callbackMore)
-                .bindApplier(new OnCallbackClickApplier(createdView.findViewById(R.id.btn_review_less)), callbackLess);
     }
 
     private ObjectAnimator textViewAnimation(TextView text, int originHeight) {

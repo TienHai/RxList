@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -55,17 +55,21 @@
         android:orientation="horizontal"
         android:gravity="end">
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_review_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="More"/>
+            android:background="?android:attr/selectableItemBackground"
+            android:rotation="90"
+            app:srcCompat="@android:drawable/ic_media_play" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_review_less"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Less"/>
+            android:background="?android:attr/selectableItemBackground"
+            android:rotation="-90"
+            app:srcCompat="@android:drawable/ic_media_play" />
 
     </LinearLayout>
 
