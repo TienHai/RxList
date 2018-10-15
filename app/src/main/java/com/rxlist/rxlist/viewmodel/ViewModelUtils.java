@@ -21,6 +21,10 @@ public class ViewModelUtils {
 
             @Override
             public void changed() {
+                if (_callback == null) {
+                    return;
+                }
+
                 _callback.execute();
             }
         };

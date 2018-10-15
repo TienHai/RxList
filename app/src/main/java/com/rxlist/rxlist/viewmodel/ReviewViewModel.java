@@ -22,7 +22,7 @@ public class ReviewViewModel {
     public ReviewViewModel(Context context, Review model) {
         _context = context;
         _model = model;
-        _buttonMoreVisibility = false;
+        _buttonMoreVisibility = true;
         _buttonLessVisibility = false;
         _buttonMoreVisibilityEvent = null;
         _buttonLessVisibilityEvent = null;
@@ -97,7 +97,6 @@ public class ReviewViewModel {
                     return;
                 }
                 heightTextView();
-
             }
         };
     }
