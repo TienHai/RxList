@@ -15,7 +15,7 @@ import com.rxlist.rxlist.R;
 import com.rxlist.rxlist.binding.ICallback;
 import com.rxlist.rxlist.binding.IRawBinder;
 import com.rxlist.rxlist.binding.IViewSource;
-import com.rxlist.rxlist.binding.appliers.OnCallbackClickApplier;
+import com.rxlist.rxlist.binding.appliers.OnClickApplier;
 import com.rxlist.rxlist.binding.appliers.RatingApplier;
 import com.rxlist.rxlist.binding.appliers.TextApplier;
 import com.rxlist.rxlist.binding.appliers.VisibilityApplier;
@@ -31,15 +31,16 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
     @Override
     public void bindValues(final View createdView, IRawBinder rawBinder, final ReviewViewModel viewModel) {
         TextView text = createdView.findViewById(R.id.txt_review_description);
+
         rawBinder
                 .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_author_name)), viewModel.authorName())
                 .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_title)), viewModel.title())
                 .bindApplier(new RatingApplier((RatingBar) createdView.findViewById(R.id.review_ratingbar)), viewModel.note())
                 .bindApplier(new TextApplier(text), viewModel.description())
-                .bindApplier(new OnCallbackClickApplier(createdView.findViewById(R.id.btn_review_more)), callbackMore(text))
-                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.isButtonMoreVisible(text))
-                .bindApplier(new OnCallbackClickApplier(createdView.findViewById(R.id.btn_review_less)), callbackLess(text))
-                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.isButtonLessVisible(text));
+                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.isButtonMoreVisible())
+                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.isButtonLessVisible())
+                .bindApplier(new OnClickApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.onButtonDescriptionMoreCommand(text))
+                .bindApplier(new OnClickApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.onButtonDescriptionLessCommand(text));
     }
 
     private ICallback callbackMore(final TextView text) {

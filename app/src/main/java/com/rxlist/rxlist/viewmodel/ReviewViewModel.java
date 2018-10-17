@@ -1,13 +1,20 @@
 package com.rxlist.rxlist.viewmodel;
 
+import android.app.Activity;
 import android.content.Context;
+import android.text.Layout;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rxlist.rxlist.R;
 import com.rxlist.rxlist.binding.IBooleanObservable;
 import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IEvent;
 import com.rxlist.rxlist.model.Review;
+
+import org.w3c.dom.Text;
 
 public class ReviewViewModel {
 
@@ -17,7 +24,6 @@ public class ReviewViewModel {
     private boolean _buttonLessVisibility;
     private IEvent _buttonMoreVisibilityEvent;
     private IEvent _buttonLessVisibilityEvent;
-    private TextView _text;
 
     public ReviewViewModel(Context context, Review model) {
         _context = context;
@@ -26,7 +32,6 @@ public class ReviewViewModel {
         _buttonLessVisibility = false;
         _buttonMoreVisibilityEvent = null;
         _buttonLessVisibilityEvent = null;
-        _text = null;
     }
 
     public String title() {
@@ -45,12 +50,78 @@ public class ReviewViewModel {
         return _model.getDescription();
     }
 
-    public IBooleanObservable isButtonMoreVisible(TextView text) {
-        if (_text == null) {
-            _text = text;
-            _text.addOnLayoutChangeListener(textViewLayoutChangeListener());
-        }
+    public ICommand onButtonDescriptionMoreCommand(final TextView text) {
+        return new ICommand() {
+            @Override
+            public boolean canExecute() {
+                return true;
+            }
 
+            @Override
+            public void execute() {
+                text.setMaxLines(Integer.MAX_VALUE);
+                _buttonMoreVisibility = false;
+                _buttonLessVisibility = true;
+                if (_buttonMoreVisibilityEvent != null) {
+                    _buttonMoreVisibilityEvent.changed();
+                    _buttonLessVisibilityEvent.changed();
+                }
+            }
+        };
+    }
+
+    public ICommand onButtonDescriptionLessCommand(final TextView text) {
+        return new ICommand() {
+            @Override
+            public boolean canExecute() {
+                return true;
+            }
+
+            @Override
+            public void execute() {
+                text.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                text.setMaxLines(4);
+                _buttonMoreVisibility = true;
+                _buttonLessVisibility = false;
+                if (_buttonMoreVisibilityEvent != null) {
+                    _buttonMoreVisibilityEvent.changed();
+                    _buttonLessVisibilityEvent.changed();
+                }
+            }
+        };
+    }
+
+
+    public ICommand onTextLayoutChanged() {
+        return new ICommand() {
+            @Override
+            public boolean canExecute() {
+                return true;
+            }
+
+            @Override
+            public void execute() {
+                TextView text = ((Activity)_context).findViewById(R.id.txt_review_description);
+                boolean isEllipsize = !((text.getLayout().getText().toString()).equalsIgnoreCase(text.getText().toString()));
+
+                if(isEllipsize) {
+                    _buttonMoreVisibility = true;
+                    _buttonLessVisibility = false;
+                } else {
+                    _buttonMoreVisibility = false;
+                    _buttonLessVisibility = true;
+                }
+
+
+                if (_buttonMoreVisibilityEvent != null) {
+                    _buttonMoreVisibilityEvent.changed();
+                    _buttonLessVisibilityEvent.changed();
+                }
+            }
+        };
+    }
+
+    public IBooleanObservable isButtonMoreVisible() {
         return new IBooleanObservable() {
             @Override
             public boolean value() {
@@ -59,17 +130,14 @@ public class ReviewViewModel {
 
             @Override
             public IEvent changed() {
+                _buttonMoreVisibilityEvent = ViewModelUtils.newEvent();
+
                 return _buttonMoreVisibilityEvent;
             }
         };
     }
 
-    public IBooleanObservable isButtonLessVisible(TextView text) {
-        if (_text == null) {
-            _text = text;
-            _text.addOnLayoutChangeListener(textViewLayoutChangeListener());
-        }
-
+    public IBooleanObservable isButtonLessVisible() {
         return new IBooleanObservable() {
             @Override
             public boolean value() {
@@ -78,38 +146,10 @@ public class ReviewViewModel {
 
             @Override
             public IEvent changed() {
+                _buttonLessVisibilityEvent = ViewModelUtils.newEvent();
+
                 return _buttonLessVisibilityEvent;
             }
         };
-    }
-
-    private View.OnLayoutChangeListener textViewLayoutChangeListener() {
-        _buttonMoreVisibilityEvent = ViewModelUtils.newEvent();
-        _buttonLessVisibilityEvent = ViewModelUtils.newEvent();
-
-        return new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight,
-                                       int oldBottom) {
-                // its possible that the layout is not complete in which case
-                // we will get all zero values for the positions, so ignore the event
-                if (left == 0 && top == 0 && right == 0 && bottom == 0) {
-                    return;
-                }
-                heightTextView();
-            }
-        };
-    }
-
-    private void heightTextView() {
-        if (_text.getLineCount() > _text.getMaxLines()) {
-            _buttonMoreVisibility = false;
-            _buttonLessVisibility = true;
-        } else {
-            _buttonMoreVisibility = true;
-            _buttonLessVisibility = false;
-        }
-        _buttonMoreVisibilityEvent.changed();
-        _buttonLessVisibilityEvent.changed();
     }
 }
