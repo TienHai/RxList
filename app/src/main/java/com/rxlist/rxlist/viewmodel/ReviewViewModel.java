@@ -90,37 +90,7 @@ public class ReviewViewModel {
             }
         };
     }
-
-
-    public ICommand onTextLayoutChanged() {
-        return new ICommand() {
-            @Override
-            public boolean canExecute() {
-                return true;
-            }
-
-            @Override
-            public void execute() {
-                TextView text = ((Activity)_context).findViewById(R.id.txt_review_description);
-                boolean isEllipsize = !((text.getLayout().getText().toString()).equalsIgnoreCase(text.getText().toString()));
-
-                if(isEllipsize) {
-                    _buttonMoreVisibility = true;
-                    _buttonLessVisibility = false;
-                } else {
-                    _buttonMoreVisibility = false;
-                    _buttonLessVisibility = true;
-                }
-
-
-                if (_buttonMoreVisibilityEvent != null) {
-                    _buttonMoreVisibilityEvent.changed();
-                    _buttonLessVisibilityEvent.changed();
-                }
-            }
-        };
-    }
-
+    
     public IBooleanObservable isButtonMoreVisible() {
         return new IBooleanObservable() {
             @Override
