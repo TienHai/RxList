@@ -6,6 +6,7 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.rxlist.rxlist.R;
@@ -20,6 +21,7 @@ public class ReviewViewModel {
 
     private Context _context;
     private Review _model;
+    private boolean _first;
     private boolean _buttonMoreVisibility;
     private boolean _buttonLessVisibility;
     private IEvent _buttonMoreVisibilityEvent;
@@ -28,6 +30,7 @@ public class ReviewViewModel {
     public ReviewViewModel(Context context, Review model) {
         _context = context;
         _model = model;
+        _first = true;
         _buttonMoreVisibility = true;
         _buttonLessVisibility = false;
         _buttonMoreVisibilityEvent = null;
@@ -90,11 +93,27 @@ public class ReviewViewModel {
             }
         };
     }
-    
-    public IBooleanObservable isButtonMoreVisible() {
+
+    public IBooleanObservable isButtonMoreVisible(final TextView text) {
         return new IBooleanObservable() {
             @Override
             public boolean value() {
+                if (_first) {
+                    _first = false;
+                    final ViewTreeObserver vto = text.getViewTreeObserver();
+                    vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            vto.removeOnGlobalLayoutListener(this);
+                            boolean isEllipsize = !((text.getLayout().getText().toString()).equalsIgnoreCase(text.getText().toString()));
+                            if(!isEllipsize) {
+                                _buttonMoreVisibility = false;
+                                _buttonMoreVisibilityEvent.changed();
+                            }
+                        }
+                    });
+                }
+
                 return _buttonMoreVisibility;
             }
 

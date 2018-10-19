@@ -37,7 +37,7 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
                 .bindApplier(new TextApplier((TextView) createdView.findViewById(R.id.txt_review_title)), viewModel.title())
                 .bindApplier(new RatingApplier((RatingBar) createdView.findViewById(R.id.review_ratingbar)), viewModel.note())
                 .bindApplier(new TextApplier(text), viewModel.description())
-                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.isButtonMoreVisible())
+                .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.isButtonMoreVisible(text))
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.isButtonLessVisible())
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.onButtonDescriptionMoreCommand(text))
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.onButtonDescriptionLessCommand(text));
