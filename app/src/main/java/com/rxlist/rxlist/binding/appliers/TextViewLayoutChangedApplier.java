@@ -2,9 +2,9 @@ package com.rxlist.rxlist.binding.appliers;
 import android.view.View;
 import android.widget.TextView;
 
-import com.rxlist.rxlist.binding.ICommand;
+import com.rxlist.rxlist.binding.ICallback;
 
-public class TextViewLayoutChangedApplier implements IBindingApplier<ICommand>
+public class TextViewLayoutChangedApplier implements IBindingApplier<ICallback>
 {
     private final TextView _textView;
     private View.OnLayoutChangeListener _textListener;
@@ -14,11 +14,11 @@ public class TextViewLayoutChangedApplier implements IBindingApplier<ICommand>
         _textView = view;
     }
 
-    public void initialize(ICommand command) {
-        update(command);
+    public void initialize(ICallback callback) {
+        update(callback);
     }
 
-    public void update(final ICommand command)
+    public void update(final ICallback callback)
     {
         _textListener = new View.OnLayoutChangeListener()
         {
@@ -30,9 +30,7 @@ public class TextViewLayoutChangedApplier implements IBindingApplier<ICommand>
                     return;
                 }
 
-                if (command.canExecute()) {
-                    command.execute();
-                }
+                callback.execute();
             }
         };
 

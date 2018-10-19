@@ -12,7 +12,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.rxlist.rxlist.R;
+import com.rxlist.rxlist.binding.IBooleanObservable;
 import com.rxlist.rxlist.binding.ICallback;
+import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IRawBinder;
 import com.rxlist.rxlist.binding.IViewSource;
 import com.rxlist.rxlist.binding.appliers.OnClickApplier;
@@ -41,51 +43,5 @@ public class ReviewViewSource implements IViewSource<ReviewViewModel> {
                 .bindApplier(new VisibilityApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.isButtonLessVisible())
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.btn_review_more)), viewModel.onButtonDescriptionMoreCommand(text))
                 .bindApplier(new OnClickApplier(createdView.findViewById(R.id.btn_review_less)), viewModel.onButtonDescriptionLessCommand(text));
-    }
-
-    private ICallback callbackMore(final TextView text) {
-        return new ICallback() {
-            @Override
-            public void execute() {
-                int height = text.getMeasuredHeight();
-                text.setMaxLines(Integer.MAX_VALUE);
-                ObjectAnimator animation = textViewAnimation(text, height);
-                animation.start();
-            }
-        };
-    }
-
-    private ICallback callbackLess(final TextView text) {
-        return new ICallback() {
-            @Override
-            public void execute() {
-                int height = text.getMeasuredHeight();
-                text.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                text.setMaxLines(4);
-                ObjectAnimator animation = textViewAnimation(text, height);
-                animation.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-
-                        // Fix: redraw correctly textView with "..." at end.
-                        text.setMaxLines(4);
-                        text.setEllipsize(TextUtils.TruncateAt.END);
-                    }
-                });
-                animation.start();
-            }
-        };
-    }
-
-    private ObjectAnimator textViewAnimation(TextView text, int originHeight) {
-        text.measure(
-                View.MeasureSpec.makeMeasureSpec(text.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        final int newHeight = text.getMeasuredHeight();
-        ObjectAnimator animation = ObjectAnimator.ofInt(text, "height", originHeight, newHeight);
-        animation.setDuration(250);
-
-        return animation;
     }
 }
