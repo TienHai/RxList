@@ -1,20 +1,12 @@
 package com.rxlist.rxlist.viewsource;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.rxlist.rxlist.R;
-import com.rxlist.rxlist.binding.IBooleanObservable;
-import com.rxlist.rxlist.binding.ICallback;
-import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IRawBinder;
 import com.rxlist.rxlist.binding.IViewSource;
 import com.rxlist.rxlist.binding.appliers.OnClickApplier;
