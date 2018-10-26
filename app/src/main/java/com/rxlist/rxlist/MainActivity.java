@@ -13,15 +13,9 @@ import com.rxlist.rxlist.viewsource.ProductListViewSource;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProductListViewSource _viewSource;
-    private ProductListViewModel _viewModel;
-    private IUnbinder _unbinder;
-
-    MainActivity() {
-        _viewSource = null;
-        _viewModel = null;
-        _unbinder = null;
-    }
+    private ProductListViewSource _viewSource = null;
+    private ProductListViewModel _viewModel = null;
+    private IUnbinder _unbinder = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
