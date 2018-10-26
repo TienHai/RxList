@@ -1,9 +1,5 @@
 package com.rxlist.rxlist.viewmodel;
 
-import android.content.Context;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-
 import com.rxlist.rxlist.binding.ICallback;
 import com.rxlist.rxlist.binding.IEvent;
 

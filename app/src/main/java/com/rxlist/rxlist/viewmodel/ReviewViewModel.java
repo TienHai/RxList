@@ -1,21 +1,14 @@
 package com.rxlist.rxlist.viewmodel;
 
-import android.app.Activity;
 import android.content.Context;
-import android.text.Layout;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.rxlist.rxlist.R;
 import com.rxlist.rxlist.binding.IBooleanObservable;
 import com.rxlist.rxlist.binding.ICommand;
 import com.rxlist.rxlist.binding.IEvent;
 import com.rxlist.rxlist.model.Review;
-
-import org.w3c.dom.Text;
 
 public class ReviewViewModel {
 
